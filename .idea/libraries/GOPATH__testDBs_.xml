@@ -1,0 +1,35 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;testDBs&gt;">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../gopkg.in" />
+      <root url="file://$PROJECT_DIR$/../.vscode" />
+      <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$PROJECT_DIR$/../golang.org" />
+      <root url="file://$PROJECT_DIR$/../webLearning" />
+      <root url="file://$PROJECT_DIR$/../daocloudwork" />
+      <root url="file://$PROJECT_DIR$/../sourcegraph.com" />
+      <root url="file://$PROJECT_DIR$/../testgo" />
+      <root url="file://$PROJECT_DIR$/../goinaction" />
+      <root url="file://$PROJECT_DIR$/../test" />
+      <root url="file://$PROJECT_DIR$/../portcheck" />
+      <root url="file://$PROJECT_DIR$/../goLearning" />
+    </CLASSES>
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../gopkg.in" />
+      <root url="file://$PROJECT_DIR$/../.vscode" />
+      <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$PROJECT_DIR$/../golang.org" />
+      <root url="file://$PROJECT_DIR$/../webLearning" />
+      <root url="file://$PROJECT_DIR$/../daocloudwork" />
+      <root url="file://$PROJECT_DIR$/../sourcegraph.com" />
+      <root url="file://$PROJECT_DIR$/../testgo" />
+      <root url="file://$PROJECT_DIR$/../goinaction" />
+      <root url="file://$PROJECT_DIR$/../test" />
+      <root url="file://$PROJECT_DIR$/../portcheck" />
+      <root url="file://$PROJECT_DIR$/../goLearning" />
+    </SOURCES>
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>
