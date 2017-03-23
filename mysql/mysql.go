@@ -1,4 +1,4 @@
-package main
+package mysql
 
 import (
 	"database/sql"
@@ -6,13 +6,8 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"strconv"
+	"fmt"
 )
-
-func checkErr(err error) {
-	if err != nil {
-		log.Println(err)
-	}
-}
 
 //func main() {
 //	db, err := sql.Open("mysql", "root:767029384971ea6a3e1cdb0a38e3db38@tcp(192.168.2.170:60013)/testDB")
@@ -39,24 +34,85 @@ func checkErr(err error) {
 //	checkErr(err)
 //}
 
-func initMySQL(address, username, password, database string) error {
+//CREATE DATABASE testDB;
+//CREATE TABLE testTB(name varchar(20));
+
+func InsertData(address, username, password, database, table string) error {
 
 	//连接到mysql
 	db, err := sql.Open("mysql", username + ":" + password + "@tcp(" + address + ")/" + database)
 	if err != nil {
+		log.Println("InsertData: Failed to link the mysql")
+		return err
+	}
+	if db == nil {
+		err := fmt.Errorf("InsertData: sql.Open.db is nil")
 		return err
 	}
 	defer db.Close()
 
-	for i := 1; i < 1000; i++ {
-		stmt, err := db.Prepare("INSERT test SET name=?")
-		checkErr(err)
+	//插入数据
+	for i := 1; i <= 100; i++ {
+		stmt, err := db.Prepare("INSERT " + table + " SET name=?")
+		if err != nil {
+			log.Printf("InsertData.Prepare: Failed to instert in [ %d ] time: ", i, err)
+			continue
+		}
 
 		_, err = stmt.Exec("number" + strconv.Itoa(i))
-		checkErr(err)
+		if err != nil {
+			log.Printf("InsertData.Exec: Failed to instert in [ %d ] time: ", i, err)
+			continue
+		}
+	}
+	log.Println("InsertData: Insert 100 datas completely")
+	return nil
+}
 
+func FindData(address, username, password, database, table string, index int) error {
+
+	//连接到mysql
+	db, err := sql.Open("mysql", username + ":" + password + "@tcp(" + address + ")/" + database)
+	if err != nil {
+		log.Println("InsertData: Failed to link the mysql")
+		return err
+	}
+	if db == nil {
+		fmt.Errorf("InsertData: sql.Open.db is nil")
+		return err
+	}
+	defer db.Close()
+
+	//查询数据
+	rows, err := db.Query("SELECT * FROM " + table)
+	if err != nil {
+		log.Println("FindData: db.Query: cannot get rows")
+		return err
+	}
+	if rows == nil {
+		err := fmt.Errorf("FindData: db.Query.rows is nil")
+		return err
+	}
+	defer rows.Close()
+
+	stmt, err := db.Prepare("SELECT name FROM " + table + " WHERE name = ?")
+	if err != nil {
+		log.Println("FindData: db.Prepare: Failed to select")
+		return err
+	}
+	defer stmt.Close()
+
+	var result string
+	var count int
+	for i := 1; i <= index * 100; i++ {
+		err = stmt.QueryRow("number" + strconv.Itoa(i)).Scan(&result) // WHERE number = 13
+		if err != nil {
+			log.Printf("FindData: Failed to find data in [ %d ] time\n", i)
+			continue
+		}
+		count++
 	}
 
-
-
+	log.Printf("FindData: there are [ %d ] datas\n", count)
+	return nil
 }

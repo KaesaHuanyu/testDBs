@@ -1,52 +1,50 @@
-package mongo
+package mongoCluster
 
 import (
-
-	"strconv"
-
-	"gopkg.in/mgo.v2"
-	"strings"
 	"log"
+	"strings"
+	"gopkg.in/mgo.v2"
 	"fmt"
+	"strconv"
 )
 
 type Person struct {
 	Name string
 }
 
-func InsertData(address, username, password, database string) error {
+func InsertData(address string, count int) error {
 	var link string
-	link = "mongodb://" + username + ":" + password + "@" + address + "/" + database
+	link = "mongodb://" + address + "/testDB"
 	session, err := mgo.Dial(link)
 	if err != nil {
 		return err
 	}
 	if session == nil {
-		err = fmt.Errorf("InsertData: Dial: session is nil")
+		err := fmt.Errorf("InsertData: Dial: session is nil")
 		return err
 	}
 	defer session.Close()
 
 	session.SetMode(mgo.Monotonic, true)
 
-	c := session.DB(database).C("testCo")
-	for i := 1; i <= 1000; i++{
+	c := session.DB("testDB").C("testCo")
+	for i := 1 + (count-1) * 100; i <= 100 * count; i++{
 		err = c.Insert(&Person{"number" + strconv.Itoa(i)})
 		if err != nil {
 			return err
 		}
 	}
 
-	log.Println("InsertData: Insert datas completely")
+	log.Println("InsertData: Insert 100 datas completely")
 	return nil
 }
 
-func FindPrimary(address, username, password, database string) error {
+func FindPrimary(address string) error {
 
 	addresses := strings.Split(address, ",")
 
 	for _, ad := range addresses {
-		link := "mongodb://" + username + ":" + password + "@" + ad + "/" + database
+		link := "mongodb://"  + ad + "/testDB"
 		session, err := mgo.Dial(link)
 		if err != nil {
 			log.Printf("FindPrimary: %s", err)
@@ -66,12 +64,12 @@ func FindPrimary(address, username, password, database string) error {
 	return err
 }
 
-func FindData(address, username, password, database string) error {
+func FindData(address string) error {
 
 	var link string
 	var people []Person
 
-	link = "mongodb://" + username + ":" + password + "@" + address + "/" + database
+	link = "mongodb://" + address + "/testDB"
 	session, err := mgo.Dial(link)
 
 	if err != nil {
@@ -84,7 +82,7 @@ func FindData(address, username, password, database string) error {
 
 	defer session.Close()
 	session.SetMode(mgo.Monotonic, true)
-	c := session.DB(database).C("testCo")
+	c := session.DB("testDB").C("testCo")
 
 	err = c.Find(nil).All(&people)
 	if err != nil {
@@ -95,3 +93,4 @@ func FindData(address, username, password, database string) error {
 	}
 	return nil
 }
+

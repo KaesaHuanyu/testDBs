@@ -18,7 +18,7 @@ func ProducerGo(address, password string, stop chan bool) {
 	link := "amqp://admin:" + password + "@" + address + "/"
 	conn, err := amqp.Dial(link)
 	failOnError(err, "Producer: Failed to connect to RabbitMQ")
-	defer conn.Close()
+
 	if conn == nil {
 		log.Printf("Producer: Dial: conn is nil, please wait next time\n")
 		time.Sleep(2 * time.Second)
@@ -31,16 +31,19 @@ func ProducerGo(address, password string, stop chan bool) {
 		return
 	}
 
+	defer conn.Close()
 
 	ch, err := conn.Channel()
 	failOnError(err, "Producer: Failed to open a channel")
-	defer ch.Close()
+
 	if ch == nil {
 		log.Printf("Producer: Channel: ch is nil, please wait next time\n")
 		time.Sleep(2 * time.Second)
 		stop <- true
 		return
 	}
+
+	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
 		"hello",
@@ -80,7 +83,6 @@ func ConsumerGo(address, password string, stop chan bool) {
 	link := "amqp://admin:" + password + "@" + address + "/"
 	conn, err := amqp.Dial(link)
 	failOnError(err, "Consumer: Failed to connect to RabbitMQ")
-	defer conn.Close()
 
 	//检查指针是否为空
 	if conn == nil {
@@ -91,14 +93,17 @@ func ConsumerGo(address, password string, stop chan bool) {
 		return
 	}
 
+	defer conn.Close()
+
 	ch, err := conn.Channel()
 	failOnError(err, "Consumer: Failed to open a channel")
-	defer ch.Close()
 
 	if ch == nil {
 		log.Printf("Producer: Channel: ch is nil, please wait next time\n")
 		return
 	}
+
+	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
 		"hello",
