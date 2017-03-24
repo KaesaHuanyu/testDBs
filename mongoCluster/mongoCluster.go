@@ -2,7 +2,6 @@ package mongoCluster
 
 import (
 	"log"
-	"strings"
 	"gopkg.in/mgo.v2"
 	"fmt"
 	"strconv"
@@ -37,31 +36,6 @@ func InsertData(address string, count int) error {
 
 	log.Println("InsertData: Insert 100 datas completely")
 	return nil
-}
-
-func FindPrimary(address string) error {
-
-	addresses := strings.Split(address, ",")
-
-	for _, ad := range addresses {
-		link := "mongodb://"  + ad + "/testDB"
-		session, err := mgo.Dial(link)
-		if err != nil {
-			log.Printf("FindPrimary: %s", err)
-			continue
-		} else {
-			log.Printf("FindPrimary: Now the primary point's address is: [ %s ]\n", ad)
-			session.Close()
-			return nil
-		}
-		if session == nil {
-			log.Printf("FindPrimary: Dial: [ %s ] session is nil\n", ad)
-			continue
-		}
-	}
-
-	err := fmt.Errorf("FindPrimary: Please keep one mongo point on at least")
-	return err
 }
 
 func FindData(address string) error {

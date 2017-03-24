@@ -344,9 +344,15 @@ func MongoCluster(c *cli.Context) {
 			log.Printf("InsertData: Failed to insert data: %s\n", err)
 		}
 
-		//Find shard1
+		//Find datas
+		log.Println("Find datas...")
+		mongoCluster.FindData(address)
 
+		log.Printf("Sleeping 10 seconds...you can down / up some points\n")
+		time.Sleep(10 * time.Second)
 	}
+
+	log.Printf("\n\ntime out!...if you want to test more, please restart this program\n")
 }
 
 func errExit(code int, format string, val ...interface{}) {
