@@ -1,9 +1,9 @@
 package rabbitmq
 
 import (
-	"strconv"
 	"github.com/streadway/amqp"
 	"log"
+	"strconv"
 	"time"
 )
 
@@ -55,7 +55,7 @@ func ProducerGo(address, password string, stop chan bool) {
 	)
 	failOnError(err, "Producer: Failed to declare a queue")
 
-	for i := 1; i <= 10; i++{
+	for i := 1; i <= 10; i++ {
 		body := "hello" + strconv.Itoa(i)
 		err = ch.Publish(
 			"",

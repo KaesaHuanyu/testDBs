@@ -1,9 +1,9 @@
 package mongoCluster
 
 import (
-	"log"
-	"gopkg.in/mgo.v2"
 	"fmt"
+	"gopkg.in/mgo.v2"
+	"log"
 	"strconv"
 )
 
@@ -27,7 +27,7 @@ func InsertData(address string, count int) error {
 	session.SetMode(mgo.Monotonic, true)
 
 	c := session.DB("testDB").C("testCo")
-	for i := 1 + (count-1) * 100; i <= 100 * count; i++{
+	for i := 1 + (count-1)*100; i <= 100*count; i++ {
 		err = c.Insert(&Person{"number" + strconv.Itoa(i)})
 		if err != nil {
 			return err
@@ -63,8 +63,7 @@ func FindData(address string) error {
 		log.Println("FindData: Failed to find data")
 		return err
 	} else {
-		log.Printf( "FindData: find [ %d ] data successfully\n", len(people))
+		log.Printf("FindData: find [ %d ] data successfully\n", len(people))
 	}
 	return nil
 }
-

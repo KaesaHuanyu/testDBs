@@ -1,13 +1,12 @@
 package mongo
 
 import (
-
 	"strconv"
 
-	"gopkg.in/mgo.v2"
-	"strings"
-	"log"
 	"fmt"
+	"gopkg.in/mgo.v2"
+	"log"
+	"strings"
 )
 
 type Person struct {
@@ -30,7 +29,7 @@ func InsertData(address, username, password, database string) error {
 	session.SetMode(mgo.Monotonic, true)
 
 	c := session.DB(database).C("testCo")
-	for i := 1; i <= 1000; i++{
+	for i := 1; i <= 1000; i++ {
 		err = c.Insert(&Person{"number" + strconv.Itoa(i)})
 		if err != nil {
 			return err
@@ -91,7 +90,7 @@ func FindData(address, username, password, database string) error {
 		log.Println("FindData: Failed to find data")
 		return err
 	} else {
-		log.Printf( "FindData: find [ %d ] data successfully\n", len(people))
+		log.Printf("FindData: find [ %d ] data successfully\n", len(people))
 	}
 	return nil
 }

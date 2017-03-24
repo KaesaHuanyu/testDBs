@@ -5,12 +5,10 @@ import (
 
 	"strconv"
 
-
 	"gopkg.in/redis.v5"
 	"log"
 	"strings"
 )
-
 
 func InsertData(address string, count int) error {
 
@@ -32,8 +30,7 @@ func InsertData(address string, count int) error {
 	}
 	log.Printf("InsertData: Ping this client... [ %s ]\n", pong)
 
-
-	err = client.Set("key" + strconv.Itoa(count), "value" + strconv.Itoa(count), 0).Err()
+	err = client.Set("key"+strconv.Itoa(count), "value"+strconv.Itoa(count), 0).Err()
 	if err != nil {
 		log.Printf("InsertData: [ %d ] times \n", count)
 		return err
@@ -51,7 +48,7 @@ func FindKey(address string) {
 		//创建客户端
 		client := redis.NewClient(&redis.Options{
 			Addr: ad,
-			DB: 0,
+			DB:   0,
 		})
 		if client == nil {
 			log.Printf("FindKey [ %s ]: Create Client: Failed to create client\n", ad)
@@ -73,7 +70,6 @@ func FindKey(address string) {
 			log.Printf("FindKey [ %s ]: Failed to run command keys * : %s\n", ad, err)
 			continue
 		}
-		log.Printf( "FindKey [ %s ]: find [ %d ] data successfully\n", ad, len(results))
+		log.Printf("FindKey [ %s ]: find [ %d ] data successfully\n", ad, len(results))
 	}
 }
-

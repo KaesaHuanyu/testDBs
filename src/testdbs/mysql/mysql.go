@@ -3,16 +3,16 @@ package mysql
 import (
 	"database/sql"
 
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"strconv"
-	"fmt"
 )
 
 func InsertData(address, username, password, database, table string) error {
 
 	//连接到mysql
-	db, err := sql.Open("mysql", username + ":" + password + "@tcp(" + address + ")/" + database)
+	db, err := sql.Open("mysql", username+":"+password+"@tcp("+address+")/"+database)
 	if err != nil {
 		log.Println("InsertData: Failed to link the mysql")
 		return err
@@ -44,7 +44,7 @@ func InsertData(address, username, password, database, table string) error {
 func FindData(address, username, password, database, table string, index int) error {
 
 	//连接到mysql
-	db, err := sql.Open("mysql", username + ":" + password + "@tcp(" + address + ")/" + database)
+	db, err := sql.Open("mysql", username+":"+password+"@tcp("+address+")/"+database)
 	if err != nil {
 		log.Println("InsertData: Failed to link the mysql")
 		return err
@@ -76,7 +76,7 @@ func FindData(address, username, password, database, table string, index int) er
 
 	var result string
 	var count int
-	for i := 1; i <= index * 100; i++ {
+	for i := 1; i <= index*100; i++ {
 		err = stmt.QueryRow("number" + strconv.Itoa(i)).Scan(&result) // WHERE number = 13
 		if err != nil {
 			log.Printf("FindData: Failed to find data in [ %d ] time\n", i)

@@ -5,18 +5,16 @@ import (
 
 	"strconv"
 
-
 	"gopkg.in/redis.v5"
 	"log"
 )
 
-
 func InsertData(address, password string) error {
 
 	client := redis.NewClient(&redis.Options{
-		Addr: address,
+		Addr:     address,
 		Password: password,
-		DB: 0,
+		DB:       0,
 	})
 	if client == nil {
 		err := fmt.Errorf("InsertData: Create Client: Failed to create client")
@@ -32,7 +30,7 @@ func InsertData(address, password string) error {
 	log.Printf("InsertData: Ping this client... [ %s ]\n", pong)
 
 	for i := 1; i <= 1000; i++ {
-		err := client.Set("key" + strconv.Itoa(i), "value" + strconv.Itoa(i), 0).Err()
+		err := client.Set("key"+strconv.Itoa(i), "value"+strconv.Itoa(i), 0).Err()
 		if err != nil {
 			log.Printf("InsertData: [ %d ] times : %s\n", i, err)
 			continue
@@ -46,9 +44,9 @@ func InsertData(address, password string) error {
 func FindKey(address, password string) error {
 
 	client := redis.NewClient(&redis.Options{
-		Addr: address,
+		Addr:     address,
 		Password: password,
-		DB: 0,
+		DB:       0,
 	})
 	if client == nil {
 		err := fmt.Errorf("FindKey: Create Client: Failed to create client")
@@ -69,7 +67,6 @@ func FindKey(address, password string) error {
 		log.Println("FindKey: Failed to run command keys *")
 		return err
 	}
-	log.Printf( "FindKey: find [ %d ] data successfully\n", len(results))
+	log.Printf("FindKey: find [ %d ] data successfully\n", len(results))
 	return nil
 }
-
