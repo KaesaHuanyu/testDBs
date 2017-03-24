@@ -9,34 +9,6 @@ import (
 	"fmt"
 )
 
-//func main() {
-//	db, err := sql.Open("mysql", "root:767029384971ea6a3e1cdb0a38e3db38@tcp(192.168.2.170:60013)/testDB")
-//	checkErr(err)
-//	defer db.Close()
-//
-//	names := []string{"A", "B", "C", "D"}
-//
-//	tx, err := db.Begin()
-//	checkErr(err)
-//
-//	for _, name := range names {
-//		stmt, err := tx.Prepare("INSERT testTB SET name=?")
-//		checkErr(err)
-//
-//		_, err = stmt.Exec(name)
-//		checkErr(err)
-//
-//		time.Sleep(3 * time.Second)
-//		fmt.Println("OK")
-//	}
-//
-//	err = tx.Commit()
-//	checkErr(err)
-//}
-
-//CREATE DATABASE testDB;
-//CREATE TABLE testTB(name varchar(20));
-
 func InsertData(address, username, password, database, table string) error {
 
 	//连接到mysql

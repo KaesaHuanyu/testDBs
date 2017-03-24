@@ -17,8 +17,8 @@ import (
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "testDBs"
-	app.Usage = "testDBs"
+	app.Name = "testdbs"
+	app.Usage = "testdbs"
 	app.Version = "1.0"
 	app.Author = "Kaesa Li"
 	app.Email = "kaesa.li@daocloud.io"
@@ -31,23 +31,23 @@ func main() {
 			Flags: []cli.Flag {
 				cli.StringFlag{
 					Name: "ad",
-					Usage: "the mongo service address",
+					Usage: "the mongo all addresses just like host1:port1,host2:port2,host3:port3",
 					EnvVar: "MONGO_ADDRESS",
 				},
 				cli.StringFlag{
 					Name: "u",
-					Usage: "the mysql service username",
-					EnvVar: "MYSQL_USERNAME",
+					Usage: "the mongo username",
+					EnvVar: "MONGO_USERNAME",
 				},
 				cli.StringFlag{
 					Name: "p",
-					Usage: "the mysql service password",
-					EnvVar: "MYSQL_PASSWORD",
+					Usage: "the mongo password",
+					EnvVar: "MONGO_PASSWORD",
 				},
 				cli.StringFlag{
 					Name: "db",
-					Usage: "the mysql service database",
-					EnvVar: "MYSQL_DATABASE",
+					Usage: "the mongo test database",
+					EnvVar: "MONGO_DATABASE",
 				},
 			},
 		},
@@ -69,22 +69,22 @@ func main() {
 				},
 				cli.StringFlag{
 					Name: "u",
-					Usage: "the mysql service username",
+					Usage: "the mysql username",
 					EnvVar: "MYSQL_USERNAME",
 				},
 				cli.StringFlag{
 					Name: "p",
-					Usage: "the mysql service password",
+					Usage: "the mysql password",
 					EnvVar: "MYSQL_PASSWORD",
 				},
 				cli.StringFlag{
 					Name: "db",
-					Usage: "the mysql service database",
+					Usage: "the mysql test database",
 					EnvVar: "MYSQL_DATABASE",
 				},
 				cli.StringFlag{
 					Name: "tb",
-					Usage: "the mysql service table",
+					Usage: "the mysql test table",
 					EnvVar: "MYSQL_TABLE",
 				},
 			},
@@ -97,25 +97,25 @@ func main() {
 			Flags: []cli.Flag {
 				cli.StringFlag{
 					Name: "ad",
-					Usage: "the rabbitmq service address",
+					Usage: "the rabbitmq HAproxy address",
 					EnvVar: "RABBITMQ_ADDRESS",
 				},
 				cli.StringFlag{
 					Name: "p",
-					Usage: "the rabbitmq service password",
-					EnvVar: "MYSQL_PASSWORD",
+					Usage: "the rabbitmq password",
+					EnvVar: "RABBITMQ_PASSWORD",
 				},
 			},
 		},
 
 		{
 			Name: "redis",
-			Usage: "Input the redis-ha args",
+			Usage: "Input the redis args",
 			Action: Redis,
 			Flags: []cli.Flag {
 				cli.StringFlag{
 					Name: "ad",
-					Usage: "the redis-ha service address",
+					Usage: "the redis HAproxy address",
 					EnvVar: "REDIS_ADDRESS",
 				},
 				cli.StringFlag{
@@ -133,17 +133,17 @@ func main() {
 			Flags: []cli.Flag {
 				cli.StringFlag{
 					Name: "ad1",
-					Usage: "the redis-cluster service master1 & slave1 address",
+					Usage: "the redis-cluster service master1 & slave1 address, just like masterhost1:masterport1,slavehost1:slaveport1",
 					EnvVar: "REDIS_CLUSTER_ADDRESS_1",
 				},
 				cli.StringFlag{
 					Name: "ad2",
-					Usage: "the redis-cluster service master2 & slave2 address",
+					Usage: "the redis-cluster service master2 & slave2 address, just like masterhost2:masterport2,slavehost2:slaveport2",
 					EnvVar: "REDIS_CLUSTER_ADDRESS_2",
 				},
 				cli.StringFlag{
 					Name: "ad3",
-					Usage: "the redis-cluster service master3 & slave3 address",
+					Usage: "the redis-cluster service master3 & slave3 address, just like masterhost3:masterport3,slavehost3:slaveport3",
 					EnvVar: "REDIS_CLUSTER_ADDRESS_3",
 				},
 			},
@@ -156,19 +156,9 @@ func main() {
 			Flags: []cli.Flag {
 				cli.StringFlag{
 					Name: "ad",
-					Usage: "the mongo-cluster service mongos address",
+					Usage: "the mongo-cluster service mongos1 address",
 					EnvVar: "MONGO_CLUSTER_ADDRESS",
 				},
-				//cli.StringFlag{
-				//	Name: "db",
-				//	Usage: "the mongo-cluster service database",
-				//	EnvVar: "MONGO_CLUSTER_DATABASE",
-				//},
-				//cli.StringFlag{
-				//	Name: "co",
-				//	Usage: "the mongo-cluster service collection",
-				//	EnvVar: "MONGO_CLUSTER_COLLECTION",
-				//},
 			},
 		},
 	}
